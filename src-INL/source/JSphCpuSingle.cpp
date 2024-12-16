@@ -1,4 +1,5 @@
 // HEAD_DSPH
+/*The revision belongs to Copyright 2024, Battelle Energy Alliance, LLC All Rights Reserved*/
 /*
  <DUALSPHYSICS>  Copyright (c) 2020 by Dr Jose M. Dominguez et al. (see http://dual.sphysics.org/index.php/developers/).
 
