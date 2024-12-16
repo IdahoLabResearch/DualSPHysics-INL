@@ -4,16 +4,14 @@
 **Why DualSPHysics-INL?** While DualSPHysics was developed for the simulation of fluid flow, DualSPHysics-INL was developed to simulate the flow of granular materials, such as soils and biomass feedstocks. In DualSPHysics-INL, a critical state soil mechanics based G-B hypoplastic constitutive model ([Gudehus](https://www.sciencedirect.com/science/article/pii/S0038080620313391) & [Bauer](https://www.sciencedirect.com/science/article/pii/S0038080620313433)) was adopted that has the capability to simulate granular materials of a wide range of mechanical responses. The code adopts a momentum-based boundary condition that is able to sustain impact loading without particles leaking to the outside of the boundaries and can achieve a full range of frictional conditions, including free-slip and no-slip. The code adopts GPU-acceleration, enabling fast computation for complex problems. The following examples provide a glance of applications that the DualSPHysics-INL can simulate!
 
                           Screw conveyance                                  Cone penetrating in sands
-<img src="./doc/animations/Auger.gif" alt="Screw" width="500" />
-<img src="./doc/animations/CPT.gif" alt="CPT_animation" width="445" />
+<img src="./doc/animations/Auger.gif" alt="Screw" width="500" /> <img src="./doc/animations/CPT.gif" alt="CPT_animation" width="445" />
 
                                                 Biomass flow in hopper
 
 <img src="./doc/animations/Hopper.gif" alt="30_animation" width="1000" />
 
                       Oedometer compression                            Vane Shearing
-<img src="./doc/animations/Oedometer.gif" alt="oed" width="510" />
-<img src="./doc/animations/VaneShear.gif" alt="vane" width="280" />
+<img src="./doc/animations/Oedometer.gif" alt="oed" width="510" /> <img src="./doc/animations/VaneShear.gif" alt="vane" width="280" />
 
                         Static Angle of Repose
 
