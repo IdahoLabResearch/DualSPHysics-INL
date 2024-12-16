@@ -1,5 +1,20 @@
 # DualSPHysics-INL
-![image](https://github.com/user-attachments/assets/87303f84-6045-467a-b631-3b605ee97d02)
+                            Screw conveyance                                      Cone penetrating in sands
+
+<img src="https://github.com/user-attachments/assets/b1f556e4-17fb-49f8-927a-c5c88cde6b4a" alt="Screw" width="500" />
+<img src="https://github.com/user-attachments/assets/8162c988-411b-4649-a872-1f53bc54d217" alt="CPT_animation" width="400" />
+
+                                                      Biomass flow in hopper
+
+<img src="https://github.com/user-attachments/assets/e405317e-1511-4718-b901-5a6ca8eb50bb" alt="30_animation" width="1000" />
+
+                          Oedometer compression                               Vane Shearing
+<img src="https://github.com/user-attachments/assets/3af6e29f-0e60-46c1-b129-5f8e91f3c828" alt="oed" width="500" />
+<img src="https://github.com/user-attachments/assets/28fe9456-f0bc-445d-b1a7-46865e570d92" alt="vane" width="300" />
+
+                            Static Angle of Repose
+
+<img src="https://github.com/user-attachments/assets/e6f3197c-fb33-4e3f-8edf-76507b689a2b" alt="aor" width="600" />
 
 **DualSPHysics-INL** is an extended adaptation of the [DualSPHysics](https://dual.sphysics.org/) open-source Smoothed Particle Hydrodynamics (SPH) simulation software based on DualSPHysics release version 5.0.1. Source code was modified from src_mphase/DSPH_v5.0_NNewtonian. 
 
