@@ -889,10 +889,10 @@ void JSphGpuSingle::Run(std::string appname,JSphCfgRun *cfg,JLog2 *log){
   while(TimeStep<TimeMax){
     InterStep=(TStep==STEP_Symplectic? INTERSTEP_SymPredictor: INTERSTEP_Verlet);
     if(ViscoTime)Visco=ViscoTime->GetVisco(float(TimeStep));
-    bool regularize = false;
-    if (regularizationSwitch == true & remainder(step,Nregularization) == 0 & (TVisco == VISCO_Hypoplasticity || TVisco == VISCO_Elasticity)){
-      regularize = true;
-    }
+    bool regularize = false; // current regulization is not good for the G-B hypoplastic mode, so do not use it
+    //if (regularizationSwitch == true & remainder(step,Nregularization) == 0 & (TVisco == VISCO_Hypoplasticity || TVisco == VISCO_Elasticity)){
+    //  regularize = true;
+    //}
     double stepdt=ComputeStep(regularize);
     RunGaugeSystem(TimeStep+stepdt);
     if(CaseNmoving)RunMotion(stepdt);

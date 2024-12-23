@@ -220,10 +220,10 @@ void JSph::InitVars(){
   SvRes=false;
   SvTimers=false;
   SvDomainVtk=false;
-  regularizationSwitch=false;
+  //regularizationSwitch=false;
 
   KernelH=CteB=Gamma=RhopZero=CFLnumber=0;
-  Nregularization=10;
+  //Nregularization=10;
   Dp=0;
   MassFluid=MassBound=0;
   Gravity=TFloat3(0);
@@ -594,8 +594,8 @@ void JSph::LoadConfigCtes(const JXml *xml){
   MassFluid=(float)ctes.GetMassFluid();
   MassBound=(float)ctes.GetMassBound();
   Gravity=ToTFloat3(ctes.GetGravity());
-  Nregularization = (int)ctes.GetNregularization();
-  regularizationSwitch = (bool)ctes.GetregularizationSwitch();
+  //Nregularization = (int)ctes.GetNregularization();
+  //regularizationSwitch = (bool)ctes.GetregularizationSwitch();
   if(ctes.GetEps()!=0)Log->PrintWarning("Eps value is not used (this correction was removed).");
 }
 
@@ -1683,8 +1683,8 @@ void JSph::VisuConfig(){
   Log->Print(fun::VarStr("DtIni",DtIni));
   Log->Print(fun::VarStr("DtMin",DtMin));
   Log->Print(fun::VarStr("DtAllParticles",DtAllParticles));
-  Log->Print(fun::VarStr("Nregularization",Nregularization));
-  Log->Print(fun::VarStr("regularizationSwitch",regularizationSwitch));
+  //Log->Print(fun::VarStr("Nregularization",Nregularization));
+  //Log->Print(fun::VarStr("regularizationSwitch",regularizationSwitch));
   if(FixedDt){
     if(FixedDt->GetFixedValue())Log->Print(fun::VarStr("FixedDt",FixedDt->GetFixedValue()));
     else Log->Print(fun::VarStr("FixedDtFile",FixedDt->GetFile()));

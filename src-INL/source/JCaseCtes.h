@@ -121,8 +121,8 @@ private:
   double B;               ///<Constant that sets a limit for the maximum change in density.
   double MassBound;       ///<Mass of a boundary particle.
   double MassFluid;       ///<Mass of a fluid particle.
-  int Nregularization;    ///<Step intervals for stress regularization
-  bool regularizationSwitch; ///<Control use stress regularization or not
+  //int Nregularization;    ///<Step intervals for stress regularization
+  //bool regularizationSwitch; ///<Control use stress regularization or not
   //-Computed values:
   double Dp;              ///<Inter-particle distance.
 
@@ -165,8 +165,8 @@ public:
   double GetGamma()const{ return(Gamma); }
   double GetRhop0()const{ return(Rhop0); }
   double GetEps()const{ return(Eps); }
-  int GetNregularization()const{ return(Nregularization); }
-  bool GetregularizationSwitch()const{ return(regularizationSwitch); }
+  //int GetNregularization()const{ return(Nregularization); }
+  //bool GetregularizationSwitch()const{ return(regularizationSwitch); }
 
 
   void SetData2D(bool data2d,double data2dposy=0){ Data2D=data2d; Data2DPosY=(data2d? data2dposy: 0); Data2DDefined=true; }
@@ -178,11 +178,11 @@ public:
     if(v>1)Run_Exceptioon("Value cannot be greater than 1.");
     CFLnumber=v;
   }
-  void SetNregularization(int v){
-    if(!v)Run_Exceptioon("Value cannot be zero.");
-    Nregularization=v;
-  }
-  void SetregularizationSwitch(bool simple){ regularizationSwitch=(simple? true: false); }
+  //void SetNregularization(int v){
+  //  if(!v)Run_Exceptioon("Value cannot be zero.");
+  //  Nregularization=v;
+ // }
+ // void SetregularizationSwitch(bool simple){ regularizationSwitch=(simple? true: false); }
   void SetHSwlAuto(bool on){ HSwlAuto=on; }
   void SetHSwl(double v){ HSwl=v; }
   void SetSpeedSystemAuto(bool on){ SpeedSystemAuto=on; }

@@ -1368,10 +1368,10 @@ void JSphCpuSingle::Run(std::string appname, JSphCfgRun *cfg, JLog2 *log)
     //Log->Printf("TimeStep is %f", TimeStep);
     //Log->Printf("LastDt is %f \n", LastDt);
     //  Stress regularization
-    if (regularizationSwitch == true & remainder(step, Nregularization) == 0 & (TVisco == VISCO_Hypoplasticity || TVisco == VISCO_Elasticity))
-    {
-      JSphCpu::StressRegularization_SPH_ct(Np, Npb, DivData, Dcellc, SpsTauc, Posc, Velrhopc, Codec, TVisco);
-    }
+    //if (regularizationSwitch == true & remainder(step, Nregularization) == 0 & (TVisco == VISCO_Hypoplasticity || TVisco == VISCO_Elasticity))
+    //{
+    //  JSphCpu::StressRegularization_SPH_ct(Np, Npb, DivData, Dcellc, SpsTauc, Posc, Velrhopc, Codec, TVisco);
+    //}
     partoutstop = (Np < NpMinimum || !Np);
     if (TimeStep >= TimePartNext || partoutstop)
     {

@@ -73,8 +73,8 @@ void JCaseCtes::Reset(){
   HAuto=BAuto=MassBoundAuto=MassFluidAuto=true;
   H=B=MassBound=MassFluid=0;
   Dp=0;
-  Nregularization=0;
-  regularizationSwitch=false; 
+  //Nregularization=0;
+  //regularizationSwitch=false; 
 }
 
 //==============================================================================
@@ -98,8 +98,8 @@ void JCaseCtes::LoadDefault(){
   SetBAuto(true);  SetB(0);
   SetMassBoundAuto(true);  SetMassBound(0);
   SetMassFluidAuto(true);  SetMassFluid(0);
-  SetNregularization(10);
-  SetregularizationSwitch(false); 
+  //SetNregularization(10);
+  //SetregularizationSwitch(false); 
 }
 
 //==============================================================================
@@ -141,8 +141,8 @@ void JCaseCtes::ReadXmlDef(JXml *sxml,TiXmlElement* node){
   ReadXmlElementAuto(sxml,node,true,"b",B,BAuto);
   ReadXmlElementAuto(sxml,node,true,"massbound",MassBound,MassBoundAuto);
   ReadXmlElementAuto(sxml,node,true,"massfluid",MassFluid,MassFluidAuto);
-  SetNregularization(sxml->ReadElementInt(node,"Nregularization","value"));
-  SetregularizationSwitch(sxml->ReadElementBool(node,"regularizationSwitch","value"));
+  //SetNregularization(sxml->ReadElementInt(node,"Nregularization","value"));
+  //SetregularizationSwitch(sxml->ReadElementBool(node,"regularizationSwitch","value"));
 }
 
 //==============================================================================
@@ -190,8 +190,8 @@ void JCaseCtes::WriteXmlDef(JXml *sxml,TiXmlElement* node,bool svtemplate)const{
   }
   if(GetCoefHdp())WriteXmlElementComment(JXml::AddElementAttrib(node,"hdp","value",GetCoefHdp()),"Coefficient to calculate the smoothing length (hdp=h/dp)");
   WriteXmlElementComment(JXml::AddElementAttrib(node,"cflnumber","value",GetCFLnumber()),"Coefficient to multiply dt");
-  WriteXmlElementComment(JXml::AddElementAttrib(node,"Nregularization","value",GetNregularization()),"Regularization factor");
-  WriteXmlElementComment(JXml::AddElementAttrib(node,"regularizationSwitch","value",GetregularizationSwitch()),"Control regularization on/off switch");
+  //WriteXmlElementComment(JXml::AddElementAttrib(node,"Nregularization","value",GetNregularization()),"Regularization factor");
+  //WriteXmlElementComment(JXml::AddElementAttrib(node,"regularizationSwitch","value",GetregularizationSwitch()),"Control regularization on/off switch");
   WriteXmlElementAuto(sxml,node,"h",GetH(),GetHAuto(),"","metres (m)");
   WriteXmlElementAuto(sxml,node,"b",GetB(),GetBAuto(),"","Pascal (Pa)");
   WriteXmlElementAuto(sxml,node,"massbound",GetMassBound(),GetMassBoundAuto(),"","kg");
@@ -215,8 +215,8 @@ void JCaseCtes::ReadXmlRun(const JXml *sxml,TiXmlElement* node){
   SetB(sxml->ReadElementDouble(node,"b","value"));
   SetMassBound(sxml->ReadElementDouble(node,"massbound","value"));
   SetMassFluid(sxml->ReadElementDouble(node,"massfluid","value"));
-  SetNregularization(sxml->ReadElementInt(node,"Nregularization","value"));
-  SetregularizationSwitch(sxml->ReadElementBool(node,"regularizationSwitch","value"));
+  //SetNregularization(sxml->ReadElementInt(node,"Nregularization","value"));
+  //SetregularizationSwitch(sxml->ReadElementBool(node,"regularizationSwitch","value"));
 }
 
 //==============================================================================
@@ -230,8 +230,8 @@ void JCaseCtes::WriteXmlRun(JXml *sxml,TiXmlElement* node)const{
   //WriteXmlElementComment(JXml::AddElementDouble3(node,"gravity",GetGravity()),"","m/s^2");
   WriteXmlElementComment(JXml::AddElementDouble3(node,"gravity",GetGravity()),"","m/s^2 m/s^2 m/s^2 m/s^2");
   WriteXmlElementComment(JXml::AddElementAttrib(node,"cflnumber","value",GetCFLnumber()));
-  WriteXmlElementComment(JXml::AddElementAttrib(node,"regularizationSwitch","value",GetregularizationSwitch()));
-  WriteXmlElementComment(JXml::AddElementAttrib(node,"Nregularization","value",GetNregularization()));
+  //WriteXmlElementComment(JXml::AddElementAttrib(node,"regularizationSwitch","value",GetregularizationSwitch()));
+  //WriteXmlElementComment(JXml::AddElementAttrib(node,"Nregularization","value",GetNregularization()));
   WriteXmlElementComment(JXml::AddElementAttrib(node,"gamma","value",GetGamma()));
   WriteXmlElementComment(JXml::AddElementAttrib(node,"rhop0","value",GetRhop0()),"","kg/m^3");
   if(EpsDefined)WriteXmlElementComment(JXml::AddElementAttrib(node,"eps","value",GetEps()),"","m/s^2");

@@ -115,7 +115,7 @@
         <setnormalinvert invert="false" />
         <normals>
             <distanceh value="2.0" />
-            <geometryfile file="hopper_32deg_DF_1mm_20_hdp_Actual.vtk" />
+            <geometryfile file="hopper_32deg_hdp_Actual.vtk" />
             <svshapes value="1" />
         </normals>
         <motion>
@@ -126,7 +126,7 @@
                     <vel x="0.0" y="0.0" z="0.0" units_comment="m/s" />
                 </mvrect>
                 <mvrect id="2" duration="0.1" next="0">
-                    <vel x="#(0.020-0.005)/2*10" y="0.0" z="#(0.020-0.005)/2/tandg(slope)*10" units_comment="m/s" />
+                    <vel x="#(0.030-0.005)/2*10" y="0.0" z="#(0.030-0.005)/2/tandg(slope)*10" units_comment="m/s" />
                 </mvrect>
             </objreal>
             <objreal ref="1">
@@ -135,7 +135,7 @@
                     <vel x="0.0" y="0.0" z="0.0" units_comment="m/s" />
                 </mvrect>
                 <mvrect id="2" duration="0.1" next="0">
-                    <vel x="#-(0.020-0.005)/2*10" y="0.0" z="#(0.020-0.005)/2/tandg(slope)*10" units_comment="m/s" />
+                    <vel x="#-(0.030-0.005)/2*10" y="0.0" z="#(0.030-0.005)/2/tandg(slope)*10" units_comment="m/s" />
                 </mvrect>
             </objreal>
             <objreal ref="4">
