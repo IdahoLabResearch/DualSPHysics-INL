@@ -91,6 +91,8 @@ However, it is always a good practice to run the pre-processing first and check 
 
 ## DualSPHysics-INL documentation ##
 
+Most of the user guide from [DualSPHysics Wiki](https://github.com/DualSPHysics/DualSPHysics/wiki) still applies to our DualSPHysics-INL solver. Below we only emphasize on changes from the original Wiki documentation. 
+
 ### Capabilities ###
 
 •	Granular flow (e.g. soils, biomass materials)
@@ -110,10 +112,24 @@ DualSPHysics-INL does not allow couple with Chrono, MoorDyn+, Discrete Element M
 Only one granular phase is allowed at this point.
 3. The floating scheme cannot be enabled. This means that a boundary can be assigned a fixed condition or designated motion and the reaction force from granular particles on the boundary can be computed, however, free motion of boundaries upon interaction with granular particles is not allowed.
 
+### Theory ###
+Deteailed explanation of the implemented G-B hypoplastic model and the free-slip/no-slip/frictional boundary conditions please refer to the [publicatoin](#theory). 
+
+### Pre-processing ###
+
+### Guide through the input file "_Def.xml" ###
+"defining normal"
+"constitutive model"
+The G-B hypoplastic constitutive model ([Gudehus](https://www.sciencedirect.com/science/article/pii/S0038080620313391) & [Bauer](https://www.sciencedirect.com/science/article/pii/S0038080620313433)) is based on critical state soil mechancis. The model has 8 parameters, granulate hardness $h_s$, a constant deciding the pressure-sensitivity of a grain skeleton $n$, critical friction angle $\phi_c$, minimum, critical, and maximum void ratio at zero pressure $e_{d0}$, $e_{c0}$ and $e_{i0}$, a constant that governs the peak shear stress behavior $\apha$ and a constant relating the incremental stiffness, density and pressure $\beta$.
+
+### Post-processing ###
+
+
+
 ## Citing DualSPHysics-INL ##
 Theory of the code / Static Angle of Repose of biomass materials / Oedometer compression of biomass materials:
 
-•	Zhao, Y., Jin, W., Klinger, J., Dayton, D. C., & Dai, S. (2023). [SPH modeling of biomass granular flow: Theoretical implementation and experimental validation](https://www.sciencedirect.com/science/article/abs/pii/S0032591023004096). Powder Technology, 426, 118625.
+<a name="theory"></a>•	Zhao, Y., Jin, W., Klinger, J., Dayton, D. C., & Dai, S. (2023). [SPH modeling of biomass granular flow: Theoretical implementation and experimental validation](https://www.sciencedirect.com/science/article/abs/pii/S0032591023004096). Powder Technology, 426, 118625.
 
 
 Other implementation used DualSPHysics-INL:
