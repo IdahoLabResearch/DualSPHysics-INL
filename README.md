@@ -113,24 +113,112 @@ Only one granular phase is allowed at this point.
 3. The floating scheme cannot be enabled. This means that a boundary can be assigned a fixed condition or designated motion and the reaction force from granular particles on the boundary can be computed, however, free motion of boundaries upon interaction with granular particles is not allowed.
 
 ### Theory ###
+
 Deteailed explanation of the implemented G-B hypoplastic model and the free-slip/no-slip/frictional boundary conditions please refer to the [publicatoin](#theory). 
 
 ### Pre-processing ###
 
+Pre-processing relies on the GenCase binary file located at `/bin/linux/GenCase_linux64` to read a `<casename>_Def.xml` and generate files ready for running in DualSPHysics-INL. The bash file for pre-processing is straightforward. Refer to `pre-processing.sh` in any example on how to modify it. 
+
+[DesignSPHysics](https://www.design.sphysics.org/) provides a convinent way to automatically generate `<casename>_Def.xml`. However, it is based on the original DualSPHysics solver and necessary modification is required on the generated `<casename>_Def.xml` before running DualSPHysics-INL.
+
 ### Guide through the input file "_Def.xml" ###
-"defining normal"
-"constitutive model"
-The G-B hypoplastic constitutive model ([Gudehus](https://www.sciencedirect.com/science/article/pii/S0038080620313391) & [Bauer](https://www.sciencedirect.com/science/article/pii/S0038080620313433)) is based on critical state soil mechancis. The model has 8 parameters, granulate hardness $h_s$, a constant deciding the pressure-sensitivity of a grain skeleton $n$, critical friction angle $\phi_c$, minimum, critical, and maximum void ratio at zero pressure $e_{d0}$, $e_{c0}$ and $e_{i0}$, a constant that governs the peak shear stress behavior $\apha$ and a constant relating the incremental stiffness, density and pressure $\beta$.
+
+We use the file `/examples/test_AOR/test_AOR_def.xml` as an example to guide how to define the intput file. All the values other than dimensionless parameters are in SI units.  `XML_GUIDE_v5.0.pdf` and `XML_GUIDE_MDBC.pdf` located in `/doc/guides` are user guides from the original DualSPHysics. There are the bases on how to generate the "_Def.xml" file.
+
+***`<constantsdef>`***
+
+`<rhop0>`: bulk density of the granular material.
+
+`<hswl> <gamma> <speedsystem> <coefsound>`: they are used for the original fluid model not for DualSPHysics-INL. Keep them unchanged as they will not be used.
+
+`<speedsound>`: make sure the option `auto` is set to "false" and enter a speed of sound value mannually. Set it to `true` will overwrite the input speed of sound value and calcuate from `<hswl> <gamma> <speedsystem> <coefsound>`, which is not correct.
+
+`coefh`: kernel size $h = coefh* \sqrt{3 dp^2}$ where dp is the initial particle spacing. Keep coefh at a reasonable value is important to mantain accuracy and mitigate numerical instability.
+
+`<h> <b>`: they will not be used. Keep them as they are.
+
+`<massbound> <massfluid>`: keep them to "auto=true" as the mass of individual SPH particles will be computed automatically.
+
+***`<geometry>`***
+
+Follows `XML_GUIDE_v5.0.pdf`. The key is to set the normal direction of boundary particles correctly. This will be covered in the [Defining Normal](#normal) section.
+
+***`<motion>`***
+
+Follows `XML_GUIDE_v5.0.pdf`. 
+
+***constitutive model***
+
+Two constitutive models are implemented in DualSPHysics-INL, G-B hypoplastic model and linear elasticity. They are defined in `<execution><special><hypoplasticity>` and `<execution><special><elasticity>`.
+
+`<hypoplasticity>`:
+
+keep `<phase mkfluid="0">` since only one material phase is allowed.
+
+`<visco>` is the coefficient of artificial viscosity used for mitigating numerical instability. Along with the speed of sounds `<csound>`, the magnitude of numerical instability dissipation is proportional to the multiplicaiton of these two parameters. Note there is also a `<speedsound>` defined in `<casedef><constantsdef>` and a `<Visco>` defined in `<parameters>`, but theese two are used to define time step size.
+
+`<rhop>` is bulk density of the granular material.
+
+The G-B hypoplastic constitutive model ([Gudehus](https://www.sciencedirect.com/science/article/pii/S0038080620313391) & [Bauer](https://www.sciencedirect.com/science/article/pii/S0038080620313433)) is based on critical state soil mechancis. The model has 8 parameters, granulate hardness $h_s$, a constant deciding the pressure-sensitivity of a grain skeleton $n$, critical friction angle $\phi_c$, minimum, critical, and maximum void ratio at zero pressure $e_{d0}$, $e_{c0}$ and $e_{i0}$, a constant that governs the peak shear stress behavior $\alpha$ and a constant relating the incremental stiffness, density and pressure $\beta$. They are also defined in `<hypoplasticity>`.
+
+`<Hypo_initStres_x> <Hypo_initStres_y> <Hypo_initStres_z>` defining the initial stresses in x, y and z directions for all the particle nodes. Ideally they should all be set to zero but since the G-B hypoplastic model is for cohesionless material, assigning a small enough compressional stress value (e.g. -10 Pa) will not alter the result and at the same time prevent tensile stress been generated during explicit time marching. 
+
+`<Hypo_rhoparticle>` is the solid density of the material.
+
+`<Hypo_voidRatio>` initial void ratio of the material, please set it to `Hypo_rhoparticle/rhop - 1` as void ratio, bulk density and solid density are not independent. In the code, void ratio is updated in the main loop and bulk density is computed from this relationship. In the future, we will remove the bulk density as an input parameter to remove the confusion.
+
+`<Hypo_wallfriction>` frictional coefficient. The value will not matter if `<SlipMode>` in `<parameters>` is not set to "5".
+
+`<phasetype>` should be kept as "0".
+
+`<elasticity>` (refer to the example in `/examples/SlidingBlock/SlidingBlock_Def.xml`):
+
+`<lameparm1>` nad `<lameparm2>` are the lame first and second parameters.
+
+Other parameters are similar to what defined in `<hypoplasticity>`. Note that for linear elastic material, the speed of sound can be theoretically determined. Refer to the comment in `<csound>`.
+
+***'<parameters>'***
+`<parameter key="Boundary">`: set it to 2. Our boundary is not based on the mDBC method but it runs following the similar code structure. 
+
+`<parameter key="SlipMode">`: choose only from "5" , "6" and "7" for frictional slip, no-slip and free-slip conditions.
+
+`<parameter key="RheologyTreatment">`: choose only value="2". 
+
+`<parameter key="StepAlgorithm">`: choose only value="2".
+
+`<parameter key="VelocityGradientType">`: choose only value="2". 
+
+`<parameter key="Kernel">`: choose only value="2".
+
+`<parameter key="ViscoTreatment">`: choose value="4" for hypoplasticity and "5" for linear elasticity.
+
+`<parameter key="Visco">`: coefficient of viscosity used for determing time step.
+
+`<parameter key="ViscoBoundFactor">`: keep it to "1".
+
+`<parameter key="DensityDT/DensityDTvalue/Shifting/ShiftCoef/ShiftTFS">`: keep all of them to "0" as the current DualSPHysics-INL is not capable of density diffusion or shifting.
+
+`<parameter key="RigidAlgorithm">`: keep it to "1".
+
+`<parameter key="FtPause">`: keep it to "0.0".
+
+`<parameter key="DtAllParticles">`: keep it to "0".
+
+`<parameter key="TimeMax/TimeOut">`: to control the time fo the whole simulation and at what time interval the data are outputted.
+
+***Defining Normal*** <a name="normal">
+
+"to be added"
 
 ### Post-processing ###
 
-
+tobe added
 
 ## Citing DualSPHysics-INL ##
 Theory of the code / Static Angle of Repose of biomass materials / Oedometer compression of biomass materials:
 
 <a name="theory"></a>•	Zhao, Y., Jin, W., Klinger, J., Dayton, D. C., & Dai, S. (2023). [SPH modeling of biomass granular flow: Theoretical implementation and experimental validation](https://www.sciencedirect.com/science/article/abs/pii/S0032591023004096). Powder Technology, 426, 118625.
-
 
 Other implementation used DualSPHysics-INL:
 
