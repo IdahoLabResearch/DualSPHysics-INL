@@ -138,8 +138,8 @@
             <parameter key="#DtMin" value="1e-05" comment="Minimum time step (default=coefdtmin*h/speedsound)" units_comment="seconds" />
             <parameter key="DtAllParticles" value="0" comment="Velocity of particles used to calculate DT. 1:All, 0:Only fluid/floating (default=0)" />
             <parameter key="TimeInitGravity" value="0.1" comment="Time to gradually apply gravity from zero" units_comment="seconds" />
-            <parameter key="TimeMax" value="10" comment="Time of simulation" units_comment="seconds" />
-            <parameter key="TimeOut" value="0.1" comment="Time out data" units_comment="seconds" />
+            <parameter key="TimeMax" value="0.01" comment="Time of simulation" units_comment="seconds" />
+            <parameter key="TimeOut" value="0.001" comment="Time out data" units_comment="seconds" />
             <parameter key="PartsOutMax" value="1" comment="%/100 of fluid particles allowed to be excluded from domain (default=1)" units_comment="decimal" />
             <parameter key="RhopOutMin" value="0" comment="Minimum rhop valid (default=700)" units_comment="kg/m^3" />
             <parameter key="RhopOutMax" value="500" comment="Maximum rhop valid (default=1300)" units_comment="kg/m^3" />       

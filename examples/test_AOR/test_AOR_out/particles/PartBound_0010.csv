@@ -1,0 +1,4 @@
+TimeStep [s];Np;Nbound;Nfixed;Nmoving;Nfloat;Nfluid
+1;0;4294967293;4294967295;4294967295;4294967295;4294967295
+
+Pos.x [m];Pos.y [m];Pos.z [m];Force.x;Force.y;Force.z;

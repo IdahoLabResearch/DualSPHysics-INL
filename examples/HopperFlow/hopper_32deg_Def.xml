@@ -17,8 +17,6 @@
             <b value="0" auto="true" units_comment="Pascal (Pa)" />
             <massbound value="0" auto="true" units_comment="kg" />
             <massfluid value="0" auto="true" units_comment="kg" />
-            <Nregularization value="10" comment="Regularization factor. Currently only work for hypo or elastic models" />
-            <regularizationSwitch value="false" comment="Control on/off the regularization. Currently only work for hypo or elastic models" />
         </constantsdef>
         <mkconfig boundcount="241" fluidcount="9" />
         <geometry>
@@ -119,8 +117,7 @@
             <svshapes value="1" />
         </normals>
         <motion>
-            <!-- original opening 13 mm -->
-            <objreal ref="0">
+           <objreal ref="0">
                 <begin mov="1" start="0" />
                 <mvrect id="1" duration="0.5" next="2">
                     <vel x="0.0" y="0.0" z="0.0" units_comment="m/s" />

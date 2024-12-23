@@ -20,7 +20,7 @@
         </constantsdef>
         <mkconfig boundcount="241" fluidcount="9" />
         <geometry>
-            <definition dp="0.002" comment="Initial inter-particle distance" units_comment="metres (m)">
+            <definition dp="0.01" comment="Initial inter-particle distance" units_comment="metres (m)">
                 <pointmin x="-1.3" y="-1.3" z="-0.0045" />
                 <pointmax x="1.3" y="1.3" z="1" />
             </definition>
@@ -120,7 +120,7 @@
             <parameter key="#DtIni" value="0.0001" comment="Initial time step (default=h/speedsound)" units_comment="seconds" />
             <parameter key="#DtMin" value="1e-05" comment="Minimum time step (default=coefdtmin*h/speedsound)" units_comment="seconds" />
             <parameter key="DtAllParticles" value="0" comment="Velocity of particles used to calculate DT. 1:All, 0:Only fluid/floating (default=0)" />
-            <parameter key="TimeMax" value="10" comment="Time of simulation" units_comment="seconds" />
+            <parameter key="TimeMax" value="6" comment="Time of simulation" units_comment="seconds" />
             <parameter key="TimeOut" value="0.1" comment="Time out data" units_comment="seconds" />
             <parameter key="PartsOutMax" value="1.0" comment="%/100 of fluid particles allowed to be excluded from domain (default=1)" units_comment="decimal" />
             <parameter key="RhopOutMin" value="0" comment="Minimum rhop valid (default=700)" units_comment="kg/m^3" />

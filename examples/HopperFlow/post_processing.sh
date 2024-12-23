@@ -16,6 +16,7 @@ export diroutdata=${dirout}/data
 
 export dirbin=../../bin/linux
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${dirbin}
+export gencase="${dirbin}/GenCase_linux64"
 export boundaryvtk="${dirbin}/BoundaryVTK_linux64"
 export partvtk="${dirbin}/PartVTK_linux64"
 export partvtkout="${dirbin}/PartVTKOut_linux64"
@@ -24,6 +25,7 @@ export partvtkout="${dirbin}/PartVTKOut_linux64"
 export dirout2=${dirout}/particles
 ${partvtk} -dirin ${diroutdata} -savevtk ${dirout2}/PartFluid -onlytype:-all,+fluid -vars:+rhop,+Sigma,+vel,+Void
 ${partvtk} -dirin ${diroutdata} -savevtk ${dirout2}/PartBound -onlytype:-all,+bound -vars:+mk,+Force
+${boundaryvtk} -loadvtk ${dirout2}/PartBound_0010.vtk -motiondata ${diroutdata} -savevtkdata ${dirout2}/Bound
 ${partvtk} -dirin ${diroutdata} -savecsv ${dirout2}/PartBound -onlymk:13 -vars:+Force,-rhop,-type,-vel,-idp
 ${partvtkout} -dirin ${diroutdata} -savecsv ${dirout2}/PartFluidOut
 if [ $? -ne 0 ] ; then fail; fi
