@@ -1,5 +1,4 @@
 //HEAD_DSPH
-/*The revision belongs to Copyright 2024, Battelle Energy Alliance, LLC All Rights Reserved*/
 /*
 <DUALSPHYSICS>  Copyright (c) 2019 by Dr Jose M. Dominguez et al. (see http://dual.sphysics.org/index.php/developers/).
 
@@ -595,8 +594,8 @@ __device__ void GetStressTensorHypo(float2 &dtsrp1_xx_xy, float2 &dtsrp1_xz_yy, 
 //==============================================================================
 __device__ void GetStressTensorElastic(float2 &dtsrp1_xx_xy, float2 &dtsrp1_xz_yy, float2 &dtsrp1_yz_zz, float3 &dtspinrate_xyz
   ,float2 &taup1_xx_xy_old, float2 &taup1_xz_yy_old, float2 &taup1_yz_zz_old
-  ,float2 &taup1_diff_xx_xy, float2 &taup1_diff_xz_yy, float2 &taup1_diff_yz_zz
   ,float2 &taup1_xx_xy, float2 &taup1_xz_yy, float2 &taup1_yz_zz
+  ,float2 &taup1_diff_xx_xy, float2 &taup1_diff_xz_yy, float2 &taup1_diff_yz_zz
   ,double &dt, const float &lameparm2, const float &lameparm1, bool regularize)
 {
   tmatrix3f W_tensor = {0, dtspinrate_xyz.x, dtspinrate_xyz.y,
@@ -646,14 +645,14 @@ __device__ void GetStressTensorElastic(float2 &dtsrp1_xx_xy, float2 &dtsrp1_xz_y
   taup1_xz_yy.y = tau_tensor.a22;
   taup1_yz_zz.y = tau_tensor.a33;
 
-  if(regularize){
-    taup1_xx_xy.x +=taup1_diff_xx_xy.x*dt;
-    taup1_xx_xy.y +=taup1_diff_xx_xy.y*dt;
-    taup1_xz_yy.x +=taup1_diff_xz_yy.x*dt;
-    taup1_xz_yy.y +=taup1_diff_xz_yy.y*dt;
-    taup1_yz_zz.x +=taup1_diff_yz_zz.x*dt;
-    taup1_yz_zz.y +=taup1_diff_yz_zz.y*dt;
-  }
+  //if(regularize){
+  //  taup1_xx_xy.x +=taup1_diff_xx_xy.x*dt;
+  //  taup1_xx_xy.y +=taup1_diff_xx_xy.y*dt;
+  //  taup1_xz_yy.x +=taup1_diff_xz_yy.x*dt;
+  //  taup1_xz_yy.y +=taup1_diff_xz_yy.y*dt;
+  //  taup1_yz_zz.x +=taup1_diff_yz_zz.x*dt;
+  //  taup1_yz_zz.y +=taup1_diff_yz_zz.y*dt;
+  //}
 
 }
 

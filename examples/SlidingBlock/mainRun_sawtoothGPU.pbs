@@ -1,0 +1,47 @@
+#!/bin/bash
+#PBS -N RP2
+#PBS -l select=1:ncpus=6:ngpus=1
+#PBS -l place=excl
+#PBS -l walltime=1:00:00
+#PBS -j oe
+#PBS -k doe
+#PBS -P xxxx (put a real project number here)
+#!/bin/bash 
+
+module load openmpi
+module load cuda
+
+# Be sure to cd to the submission directory:
+cd /scratch/Some_User/DualSPHysics-INL/examples/SlidingBlock
+
+# "name" and "dirout" are named according to the testcase
+
+export name=VaneShear
+export dirout=${name}_out
+export diroutdata=${dirout}/data
+
+# "executables" are renamed and called from their directory
+
+export dirbin=../../bin/linux
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${dirbin}
+export dualsphysicsgpu="${dirbin}/DualSPHysics5.0_GPU_INL_sawtooth1_linux64"
+
+option=1
+
+# CODES are executed according the selected parameters of execution in this testcase
+
+#${gencase} ${name}_Def ${dirout}/${name} -save:all
+#if [ $? -ne 0 ] ; then fail; fi
+
+${dualsphysicsgpu} -gpu ${dirout}/${name} ${dirout} -dirdataout data -svres
+if [ $? -ne 0 ] ; then fail; fi
+
+
+
+if [ $option != 3 ];then
+  echo All done
+  else
+  echo Execution aborted
+fi
+
+read -n1 -r -p "Press any key to continue..." key
