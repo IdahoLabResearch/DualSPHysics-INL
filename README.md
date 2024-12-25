@@ -213,6 +213,44 @@ There are in general two ways to define boundary particle normal: 1. Automatic n
 
 1. Automatic normal vectors from actual geometry
 
+The idea is to create a guiding surface besides the actual boundary particles to direct normal orientations. When the geometry is simple, it is possible to define the surface directly in xml. For example, in `ConePenetration_Def.xml`, a container filled with boundary particle is created by:
+```
+<setmkbound mk="4" />
+<setfrdrawmode auto="true" />
+<drawcylinder radius="0.4" mask="2" objname="container">
+    <point x="0.0" y="0.0" z="0.0" />
+    <point x="0.0" y="0.0" z="0.9" />
+    <layers vdp="0,1" />
+</drawcylinder>
+```
+Note the keyword "layers" means that two layers of boundary particles are created: layer "0" is at the designated position and layer "1" is outside layer "0" with distance "1*$dp$".
+
+Then the guiding surface is created by first:
+'''
+<setactive drawpoints="false" drawshapes="true" /> # only generate the surface, not real particle points
+<setnormalinvert invert="true" />
+<drawcylinder radius="0.4" mask="2" objname="Cylinder">
+    <point x="0.0" y="0.0" z="0.0" />
+    <point x="0.0" y="0.0" z="0.9" />
+    <layers vdp="-1.25" />
+</drawcylinder>
+'''
+Here layer "-1.25" means the surface is created inside layer "0".
+
+After running `pre_processing.sh`, one can check the file `ConePenetration_GeometryShapes.vtk` and `ConePenetration_Bound.vtk`. Indeed, after checking these two files, the surface and boundary particles are created at desired positions. Note the arrows in figure denote normal directions. In this case, particles at the container bottom has normal pointing up and at the container surface pointing inside. 
+
+If the geometry is complicated, it is better to convert the geometry into a stl files and input to xml. The stl geometry of the guiding surface should be slightly larger or smaller than the geometry that is going to be filled with particles.
+
+![normal2](https://github.com/user-attachments/assets/f7770315-bf34-4edd-b47f-2cf43167a948)
+<img src="https://github.com/user-attachments/assets/b82859b9-2758-4d29-bb62-794fc415d9e7" alt="normal6" width="372">
+
+If the opposite direction is desired, change `<setnormalinvert invert="true" />` to "false".
+
+When the main running loop is initiated, a file called `CfgInit_Normals.vtk` is created. It is always a good practice to check this file which will help confirm generated normal directions. The figure below plots the normal directions in Y direction. Do not worry if the normals are not of the same magnitude. They will all be converted to unit length vectors inside the code automatically unless ($n_x$, $n_y$, $n_z$) = (0, 0, 0).
+
+<img src="https://github.com/user-attachments/assets/72a13803-fece-48e8-bc1d-68e1e9b81f57" alt="normal5" width="400">
+
+
 2. Explicit normal vectors definition in DualSPHysics configuration
 
 In DualSPHysics-INL, explicit normal vectors can be defined in 5 categories: set, plane, curves, cylinder and spheres.
