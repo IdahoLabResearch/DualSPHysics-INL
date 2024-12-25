@@ -3,8 +3,8 @@
 
 **Why DualSPHysics-INL?** While DualSPHysics was developed for the simulation of fluid flow, DualSPHysics-INL was developed to simulate the flow of granular materials, such as soils and biomass feedstocks. In DualSPHysics-INL, a critical state soil mechanics based G-B hypoplastic constitutive model ([Gudehus](https://www.sciencedirect.com/science/article/pii/S0038080620313391) & [Bauer](https://www.sciencedirect.com/science/article/pii/S0038080620313433)) was adopted that has the capability to simulate granular materials of a wide range of mechanical responses. The code adopts a momentum-based boundary condition that is able to sustain impact loading without particles leaking to the outside of the boundaries and can achieve a full range of frictional conditions, including free-slip and no-slip. The code adopts GPU-acceleration, enabling fast computation for complex problems. The following examples provide a glance of applications that the DualSPHysics-INL can simulate!
 
-                          Screw conveyance                                              Cone penetrating in sands
-<p float="left"> <img src="./doc/animations/Auger.gif" alt="Screw" width="500" /> <img src="./doc/animations/CPT.gif" alt="CPT_animation" width="445" /> </p>
+                          Screw conveyance                                          Cone penetrating in sands
+<p float="left"> <img src="./doc/animations/Auger.gif" alt="Screw" width="450" /> <img src="./doc/animations/CPT.gif" alt="CPT_animation" width="425" /> </p>
 
                                                 Biomass flow in hopper
 
@@ -207,9 +207,106 @@ Other parameters are similar to what defined in `<hypoplasticity>`. Note that fo
 
 `<parameter key="TimeMax/TimeOut">`: to control the time fo the whole simulation and at what time interval the data are outputted.
 
-***Defining Normal*** <a name="normal">
+***Defining Normal*** 
 
-"to be added"
+There are in general two ways to define boundary particle normal: 1. Automatic normal vectors from actual geometry and 2. Explicit normal vectors definition in DualSPHysics configuration as explained in `/dpc/guides/XML_GUIDE_MDBC.pdf`. These two methods can be used together in a single case. 
+
+1. Automatic normal vectors from actual geometry
+
+2. Explicit normal vectors definition in DualSPHysics configuration
+
+In DualSPHysics-INL, explicit normal vectors can be defined in 5 categories: set, plane, curves, cylinder and spheres.
+
+Normals are defined in `<execution><special><initialize>` following the format:
+
+2.1 Set
+
+Assign boundary particles under the designated $mk$ with a uniform normal direction (x, y, z).
+```
+<boundnormal_set mkbound="1"> # choose mk as other number as needed
+    
+    <normal x="0" y="0" z="1" />
+    
+    <corner v="false" />
+
+</boundnormal_set>
+```
+
+When "corner" is chosen to "false", the normal direction is defined normally; when it is set ot "true", normal is defined using the "hybrid contact method" as introduced by [Zhan et al., 2020](https://onlinelibrary.wiley.com/doi/full/10.1002/nag.3070).
+
+2.2 Plane
+
+All particles are assigned a same normal direction. This is essential the same with bondnormal_set.
+```
+<boundnormal_plane mkbound="1"> 
+    
+    <point auto="true" />
+    
+    <normal x="0" y="0" z="1" />
+
+    <maxdisth v="2.0" />
+
+    <corner v="false" />
+
+</boundnormal_plane>
+```
+
+2.3 Curve
+
+Normals are following the direction of a hollow cylinder with its axis alongs center1 - center2 direction. Set "inverse" to true or false to reverse the normal direction.
+```
+<boundnormal_curved mkbound="1"> 
+    
+    <center1 x="0" y="0" z="1" />
+
+    <center2 x="0" y="0" z="-1" />
+
+    <inverse v="false" />
+    
+    <corner v="false" />
+
+</boundnormal_curved>
+```
+
+2.4 Cylinder
+
+Normal defined with "cylinder" is similar to "curved" but also with two caps. 
+```
+<boundnormal_cylinder mkbound="1"> 
+    
+    <center1 x="0" y="0" z="1" />
+
+    <center2 x="0" y="0" z="-1" />
+
+    <radius v="5.8" />
+
+    <inside v="true" /> # "true": solid cylinder; "false": container cylinder 
+
+    <maxdisth v="2.0" /> # maxium distance from each boundary particle to boundary limit allowed to compute the normal 
+
+    <corner v="false" />
+
+</boundnormal_cylinder>
+```
+
+2.5 Sphere
+
+To define normals according to spherical geometry.
+```
+<boundnormal_sphere mkbound="1"> 
+    
+    <center1 x="0" y="0" z="1" />
+
+    <radius v="1.2" />
+
+    <inside v="true" /> # boundary particles inside or outside the sphere
+
+    <maxdisth v="2.0" />
+
+    <corner v="false" />
+
+</boundnormal_sphere>
+```
 
 ### Post-processing ###
 
