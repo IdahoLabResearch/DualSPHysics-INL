@@ -64,8 +64,8 @@ After modifying the Makefile, save it and run (note if it's on cluster, use `mod
 
 If the compilation is successful, an executable with the name defined in Makefile `EXECNAME` should appear in the folder defined in `EXECS_DIRECTORY`.
 
-### Quick start - run a test case
-Navigate to the folder `DualSPHysics-INL/examples/test_AOR`. Make sure the input file `test_AOR_Def.xml` exist. This is a static angle of repose test case with a small amount of particles that can be computed very fast, but you can also try all other cases in the `/examples/` folder.
+## Quick start - run a test case
+Navigate to the folder `DualSPHysics-INL/examples/test_AOR`. Make sure the input file `test_AOR_Def.xml` exists. This is a static angle of repose test case with a small amount of particles that can be computed very fast, but you can also try all other cases in the `/examples/` folder.
 
 Run pre_processing.sh:
 
@@ -174,7 +174,7 @@ The G-B hypoplastic constitutive model ([Gudehus](https://www.sciencedirect.com/
 
 `<elasticity>` (refer to the example in `/examples/SlidingBlock/SlidingBlock_Def.xml`):
 
-`<lameparm1>` nad `<lameparm2>` are the lame first and second parameters.
+`<lameparm1>` and `<lameparm2>` are the lame first and second parameters.
 
 Other parameters are similar to what defined in `<hypoplasticity>`. Note that for linear elastic material, the speed of sound can be theoretically determined. Refer to the comment in `<csound>`.
 
@@ -213,7 +213,41 @@ Other parameters are similar to what defined in `<hypoplasticity>`. Note that fo
 
 ### Post-processing ###
 
-tobe added
+***post_processing.sh***
+
+Follow `doc/help/PartVTK_Help.out` and `PartVTKOut_Help.out` on how to modify the post-processing code. Also refer to the `examples/` folder.
+
+For material particles modeled in hypoplasticity, DualSPHysics-INL is able to output two more new variables: the normal component of stress tensor $sigma_{xx}$, $sigma_{yy}$, $sigma_{zz}$ from the keyword `+Sigma`, and void ratio from the keyword `+Void`. For material particles modeled in elasticity, `+Void` is not allowed.
+
+For boundary particles regardless of hypoplastic or elastic models, a new variable `+Force` is allowed which computes the reactive forces act upon each individual boundary particle with an area of $dp^2$ ($dp$) is the initial particle spacing defined in `*_Def.xml`. Thus, the total reactive force of a surface is the summation of all the reactive forces from the individual boundary particles on the surface. The normal reactive stress mapping can be computed as the reactive forces from the individual boundary particles normalized by $dp^2$.
+
+Note that when outputting the data for a specific boundary, the "mk" in `post_processing.sh` should be "mk+10" from `*_Def.xml` to refer to a same boundary denoted in the xml. For example, in the `Oedometer` case, the following line in `post_processing.sh`:
+
+`${partvtk} -dirin ${diroutdata} -savecsv ${dirout2}/PartBound -onlymk:13 -vars:+Force,-rhop,-type,-vel,-idp`
+
+Refers to the base plate defined as `<setmkbound mk="3" />` in `Oedometer_Def.xml`.
+
+***DualSPHysics_Bound_ForceTorque.py***
+
+`DualSPHysics_Bound_ForceTorque.py` is used to compute reactive forces and torque on a specific boundary by reading the `PartBound*.csv` data generated from `post_processing`. Modificatoin in the function "inputData" may be needed as the columns defined in your csv file could be different. You may also modify the code to enable parallel processing a variety of files at a same time.
+
+An example usage would be:
+
+`python3 DualSPHysics_Bound_ForceTorque calculation.py -path examples/Oedometer/Oedometer_out -ForceCal True -TorqueCal True -Mk 13 -AxisP1 0 0 0 -AxisP2 0 0 1`
+
+When `-ForceCal` is set to True, the reactive forces will be outputted.
+
+When `-TorqueCal` is set to True, the reactive torque along a reference axis defined by its two endpoints `AxisP1` and `AxisP2`will be outputted. When `-TorqueCal` is set to False, arbitrary input of `AxisP1` and `AxisP2` are still needed but they are not used and torque will not be outputted.
+
+***MassFlowRate.py***
+
+This python code located in `examples/HopperFlow` is used to compute mass flow rate. To be specific, this code computes the mass rate of particles flow to the outside of the domain. Thus, an outlet should be placed close to the domain boundary defined in `*_Def.xml`. 
+
+In `post_processing.sh`, the following line should be added:
+
+`${partvtkout} -dirin ${diroutdata} -savecsv ${dirout2}/PartFluidOut`
+
+In `MassFlowRate.py`, adjust the "Massfluid" to the mass of individual material particle. This information can be found in the generated `*_out/*.xml` file. Also adjust "PartTimeInterval" to the same with "TimeOut". 
 
 ## Citing DualSPHysics-INL ##
 Theory of the code / Static Angle of Repose of biomass materials / Oedometer compression of biomass materials:
