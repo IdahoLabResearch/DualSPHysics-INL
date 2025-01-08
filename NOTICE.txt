@@ -1,6 +1,6 @@
 ﻿This project contains code from Idaho National Laboratory.
 Github URL: https://github.com/IdahoLabUnsupported/DualSPHysics-INL
-Licensed under MIT
+Licensed under LGPL 2.1
 
 
 © 2025 Battelle Energy Alliance, LLC
@@ -32,11 +32,8 @@ OWNED RIGHTS.
 
 Authors:
 
-Cameron Krone
-Jared C Wadsworth
-Israel G Olaveson
-Anna T Quach
-Thomas Kopcho
+Wencheng Jin
+Yumeng Zhao
 
 
 
