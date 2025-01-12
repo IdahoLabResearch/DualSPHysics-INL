@@ -32,12 +32,12 @@ Linux Ubuntu 22.04 LTS (TO BE TESTED)
 
 Linux Rocky 8.10 + cuda-12.2 + gcc-12.3.0 (INL Sawtooth cluster)
 
-### Download the LIGGGHTS-INL repository:
-Option 1a. For users: `git clone https:xxx.git`
+### Download the DualSPHysics-INL repository:
+Option 1a. For users: `git clone https://github.com/IdahoLabResearch/DualSPHysics-INL.git`
 
-Option 1b. For users: `wget https://github.com/xxx.zip`
+Option 1b. For users: `wget https://github.com/IdahoLabResearch/DualSPHysics-INL.zip`
 
-Option 2. For developers: `git clone git@github.com:xxx.git`
+Option 2. For developers: `git clone git@github.com:IdahoLabResearch/DualSPHysics-INL.git`
 
 ### Compiling the source code
 Navigate to the repository folder DualSPHysics-INL/src-INL/source
