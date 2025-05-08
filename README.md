@@ -397,7 +397,7 @@ Biomass flow in hopper and auger:
 
 A fully-connected Artificial Neuron Network (ANN) model for biomass hopper flow:
 
-•	Ikbarieh, A., Jin, W., Zhao, Y., Saha, N., Klinger, J., Xia, Y., & Dai, S (2025). Machine learning assisted cross-scale hopper design for flowing biomass granular materials (ACS Sustainable Chemistry & Engineering, Under Review)
+•	Ikbarieh, A., Jin, W., Zhao, Y., Saha, N., Klinger, J., Xia, Y., & Dai, S (2025). [Machine learning assisted cross-scale hopper design for flowing biomass granular materials](https://pubs.acs.org/doi/full/10.1021/acssuschemeng.4c08938). ACS Sustainable Chemistry & Engineering. 
 
 ## License ##
 (to be added)
